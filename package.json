@@ -1,0 +1,19 @@
+{
+  "name": "express_1.0",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.22.0",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "monk": "^7.3.4",
+    "qs": "^6.10.1"
+  }
+}
