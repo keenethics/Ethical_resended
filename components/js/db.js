@@ -2,7 +2,7 @@ const db = require('monk')('localhost/slackResender');
 const credentials = db.get('credentials');
 
 module.exports.get = (query) => {
-    return credentials.find(query);
+    return credentials.findOne(query);
 }
 
 module.exports.set = (obj) => {

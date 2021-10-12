@@ -1,0 +1,92 @@
+{
+	"type": "modal",
+	"callback_id": "selector_modal_submit",
+	"title": {
+		"type": "plain_text",
+		"text": "Меню пересилки"
+	},
+	"blocks": [
+		{
+			"type": "input",
+            "block_id": "message_block",
+            "label": {
+                "type": "plain_text",
+                "text": "Повідомлення для розсилки"
+            },
+			"element": {
+				"type": "plain_text_input",
+				"action_id": "writing_action",
+				"multiline": true,
+				"placeholder": {
+					"type": "plain_text",
+					"text": "Введіть повідомлення тут"
+				}
+			},
+			"hint": {
+				"type": "plain_text",
+				"text": "Вписуйте лише текст, без зображень чи інших інтерактивних елементів."
+			}
+		},
+		{
+			"type": "section",
+			"block_id": "selector_block",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Оберіть отримувачів"
+			},
+			"accessory": {
+				"type": "multi_static_select",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "Оберіть отримувачів"
+				},
+				"action_id": "selection_action",
+				"option_groups": []
+			}
+		},
+		{
+			"type": "section",
+            "block_id": "checkboxes_block",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Додаткові опції"
+			},
+			"accessory": {
+				"type": "checkboxes",
+				"options": [
+					{
+						"text": {
+							"type": "mrkdwn",
+							"text": "*Надсилати від імені бота*"
+						},
+						"description": {
+							"type": "mrkdwn",
+							"text": "Якщо обрано, то повідомлення надсилається від імені бота, якщо ні - від вашого"
+						},
+						"value": "send_as_bot"
+					},
+                    {
+						"text": {
+							"type": "mrkdwn",
+							"text": "Надсилати обмеженим користувачам*"
+						},
+						"description": {
+							"type": "mrkdwn",
+							"text": "Надсилати і користувачам-гостям, а не лише членам команди."
+						},
+						"value": "send_to_restricted_users"
+					}
+				],
+				"action_id": "checkboxes_action"
+			}
+		}
+	],
+	"submit": {
+		"type": "plain_text",
+		"text": "Надіслати"
+	},
+	"close": {
+		"type": "plain_text",
+		"text": "Відмінити"
+	}
+}

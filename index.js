@@ -1,4 +1,4 @@
-const routes = require('./components/inits');
+const routes = require('./components/js/inits');
 const bodyParser = require('body-parser');
 let app = require('express')();
 
