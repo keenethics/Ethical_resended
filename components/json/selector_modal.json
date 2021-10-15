@@ -27,6 +27,9 @@
 				"text": "Вписуйте лише текст, без зображень чи інших інтерактивних елементів."
 			}
 		},
+        {
+			"type": "divider"
+		},
 		{
 			"type": "section",
 			"block_id": "selector_block",
@@ -43,6 +46,9 @@
 				"action_id": "selection_action",
 				"option_groups": []
 			}
+		},
+        {
+			"type": "divider"
 		},
 		{
 			"type": "section",

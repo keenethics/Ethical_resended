@@ -33,8 +33,8 @@ module.exports.handleShortcutSubmit = async (payload) => {
     let token = post_as_bot ? 
         keyset.SLACK_BOT_TOKEN : payload.user.user_access_token;
 
-    let count = await submitHandlers.postMessages(user_set, token, message);
+    let result = await submitHandlers.postMessages(user_set, token, message);
     submitHandlers.confirmSending(
-        keyset.SLACK_BOT_TOKEN, payload.user.user_id, count
+        keyset.SLACK_BOT_TOKEN, payload.user.user_id, result
     );
 }

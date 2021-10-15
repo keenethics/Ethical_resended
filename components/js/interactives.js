@@ -27,10 +27,9 @@ router.post('/', async (req, res, next) => {
             });
         
         if(user) {
-            payload.user = user
+            payload.user = user;
         } else {
-            //throw error?
-            throw new Error("Not authorized!");
+            if(payload.type !=='block_actions') console.log("Not authorized!");
         }
 
         if(payload.type === 'message_action') {

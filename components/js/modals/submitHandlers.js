@@ -65,18 +65,35 @@ module.exports.intersectSets = async (channels, users, user_set) => {
 
 module.exports.postMessages = async (user_set, token, message) => {
     let success_counter = 0;
-    user_set.forEach(async (user_id) => {
-        let res = await requests.postMessage(token, user_id, message);
-        success_counter += res.data.ok ? 1 : 0;
+    let error_users = [];
+    user_set = Array.from(user_set);
+
+    let responses = await Promise.all(user_set.map((user_id) => {
+        return requests.postMessage(token, user_id, message);
+    }));
+
+    responses.forEach( (res, idx) => {
+        if(res.data.ok) {
+            success_counter += 1;
+        } else {
+            error_users.push(user_set[idx]);
+        }
     });
 
-    return success_counter;
+    return [success_counter, error_users];
 }
 
-module.exports.confirmSending = async (bot_token, user_id, counter) => {
-    let res = await requests.postMessage(
-        bot_token, user_id, 
-        `Successfully sent ${counter} messages`
-    );
-    console.log(res.data);
+module.exports.confirmSending = async (bot_token, user_id, results) => {
+    if(results[1].length !== 0) {
+        var res = await requests.postMessage(
+            bot_token, user_id, 
+            (`Успішно надіслано ${results[0]} повідомлень, не вдалося` + 
+             ` надіслати повідомлення цим користувачам: ${results[1]}`)
+        );
+    } else {
+        var res = await requests.postMessage(
+            bot_token, user_id, 
+            `Успішно надіслано ${results[0]} повідомлень`
+        );
+    }
 }

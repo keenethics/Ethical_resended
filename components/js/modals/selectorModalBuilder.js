@@ -54,6 +54,6 @@ module.exports.buildSelector = async (payload) => {
             value: payload.team.id
         }]
     });
-    modal.blocks[1].accessory.option_groups = groups;
+    modal.blocks[2].accessory.option_groups = groups;
     return modal;
 }
