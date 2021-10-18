@@ -64,9 +64,10 @@ router.get("/oauth_redirect", (req, res, next) => {
                 res.redirect("./thanks");
                 res.end();
             } else {
+                fs.writeFileSync('./request', utils.inspect(req));
+                res.end();
                 throw new Error('Auth flow was ruined!');
             }
-            res.end();
         }).catch(error => {
             console.log(error);
         });

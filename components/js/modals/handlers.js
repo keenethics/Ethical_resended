@@ -3,11 +3,11 @@ const builder = require('./selectorModalBuilder');
 const requests = require('../requests');
 const submitHandlers = require('./submitHandlers');
 
-module.exports.handleShortcut = async (payload) => {
-    let resender_modal = await builder.buildSelector(payload)
+module.exports.handleShortcut = async (parameters) => {
+    let resender_modal = await builder.buildSelector(parameters)
                             .catch(error => console.log(error));
     requests.viewOpen(
-        payload.trigger_id, 
+        parameters.trigger_id, 
         resender_modal, 
         keyset.SLACK_BOT_TOKEN
     );

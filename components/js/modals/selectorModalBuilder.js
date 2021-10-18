@@ -1,15 +1,15 @@
 const selector_modal = require('../../json/selector_modal.json');
 const loaders = require('../loaders');
 
-module.exports.buildSelector = async (payload) => {
-    let users = await loaders.loadUsers(payload.user.team_id)
+module.exports.buildSelector = async (parameters) => {
+    let users = await loaders.loadUsers(parameters.team_id)
                              .catch((error) => console.log(error));
-    let channels =  await  loaders.loadChannels(payload.user.team_id)
+    let channels =  await  loaders.loadChannels(parameters.team_id)
                                     .catch((error) => console.log(error));
 
     let modal = {};
     Object.assign(modal, selector_modal);
-    modal.blocks[0].element.initial_value = payload.message.text;
+    modal.blocks[0].element.initial_value = parameters.text;
     let groups = [];
     if(users.length) {groups.push({
         label: {
@@ -49,9 +49,9 @@ module.exports.buildSelector = async (payload) => {
         options: [{
             text: {
                 type: "plain_text",
-                text: payload.team.domain
+                text: parameters.team_domain
             },
-            value: payload.team.id
+            value: parameters.team_id
         }]
     });
     modal.blocks[2].accessory.option_groups = groups;
