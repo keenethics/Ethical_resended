@@ -1,4 +1,3 @@
-const keyset = require('../../../constants.json');
 const builder = require('./selectorModalBuilder');
 const requests = require('../requests');
 const submitHandlers = require('./submitHandlers');
@@ -6,10 +5,11 @@ const submitHandlers = require('./submitHandlers');
 module.exports.handleShortcut = async (parameters) => {
     let resender_modal = await builder.buildSelector(parameters)
                             .catch(error => console.log(error));
+    
     requests.viewOpen(
         parameters.trigger_id, 
         resender_modal, 
-        keyset.SLACK_BOT_TOKEN
+        parameters.bot_token
     );
 }
 
@@ -31,10 +31,10 @@ module.exports.handleShortcutSubmit = async (payload) => {
     );
 
     let token = post_as_bot ? 
-        keyset.SLACK_BOT_TOKEN : payload.user.user_access_token;
+        payload.user.bot_access_token : payload.user.user_access_token;
 
     let result = await submitHandlers.postMessages(user_set, token, message);
     submitHandlers.confirmSending(
-        keyset.SLACK_BOT_TOKEN, payload.user.user_id, result
+        payload.user.bot_access_token, payload.user.user_id, result
     );
 }

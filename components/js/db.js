@@ -1,14 +1,8 @@
-const db = require('monk')('localhost/slackResender');
-const credentials = db.get('credentials');
+const db = require('./postgres');
 
-module.exports.get = (query) => {
-    return credentials.findOne(query);
-}
+// Change to mongoDB if you like (not suited for production)
+// const db = require('./mongo'); 
 
-module.exports.set = (obj) => {
-    return credentials.insert(obj);
-}
-
-module.exports.delete = (query) => {
-    return credentials.remove(query);
-}
+module.exports.get = db.get;
+module.exports.set = db.set;
+module.exports.delete = db.delete;

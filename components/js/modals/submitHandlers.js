@@ -85,10 +85,11 @@ module.exports.postMessages = async (user_set, token, message) => {
 
 module.exports.confirmSending = async (bot_token, user_id, results) => {
     if(results[1].length !== 0) {
+        results[1] = results[1].map((user_id) => `<@${user_id}>`)
         var res = await requests.postMessage(
             bot_token, user_id, 
             (`Успішно надіслано ${results[0]} повідомлень, не вдалося` + 
-             ` надіслати повідомлення цим користувачам: ${results[1]}`)
+             ` надіслати повідомлення цим користувачам: ${results[1].join(', ')}`)
         );
     } else {
         var res = await requests.postMessage(

@@ -1,7 +1,7 @@
 let router = require('express').Router();
-const keySet = require('../../constants.json');
 const requests = require('./requests');
 const appHome = require('../json/appHome.json');
+const db = require('./db');
 
 function verifyURL(response, challenge) {
     response.type('application/x-www-form-urlencoded');
@@ -9,8 +9,10 @@ function verifyURL(response, challenge) {
     response.end();
 }
 
-function openAppHome(response, user_id) {
-    requests.viewPublish(user_id, appHome, keySet.SLACK_BOT_TOKEN);
+async function openAppHome(response, user_id, team_id) {
+    let workspace_token = (await db.get(team_id)).bot_access_token;
+    
+    requests.viewPublish(user_id, appHome, workspace_token);
     response.status(200);
     response.end();
 }
@@ -20,7 +22,7 @@ router.post('/', (req, res, next) => {
         if(req.body.type === 'url_verification') {
             verifyURL(res, req.body.challenge);
         } else if(req.body.event.type === 'app_home_opened'){
-            openAppHome(res, req.body.event.user);
+            openAppHome(res, req.body.event.user, req.body.team_id);
         }
         
     } catch (error) {

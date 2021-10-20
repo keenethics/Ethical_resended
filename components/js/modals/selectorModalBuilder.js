@@ -4,13 +4,15 @@ const loaders = require('../loaders');
 module.exports.buildSelector = async (parameters) => {
     let users = await loaders.loadUsers(parameters.team_id)
                              .catch((error) => console.log(error));
+    users = users.filter((user) => user.id !== parameters.user_id);
+    
     let channels =  await  loaders.loadChannels(parameters.team_id)
                                     .catch((error) => console.log(error));
 
     let modal = {};
+    let groups = [];
     Object.assign(modal, selector_modal);
     modal.blocks[0].element.initial_value = parameters.text;
-    let groups = [];
     if(users.length) {groups.push({
         label: {
             type: "plain_text",

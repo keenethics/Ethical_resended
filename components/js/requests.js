@@ -60,3 +60,21 @@ module.exports.viewPublish = async (user_id, modal, token) => {
 
     return response;
 }
+
+module.exports.response_to_hook = async (response_url, text) => { 
+    let response = await axios.post(
+        response_url, 
+        JSON.stringify({
+            text: text
+        }),
+        {
+            headers: {
+                "Content-Type": "application/json; charset=utf-8"
+            }
+        }
+        ).catch(
+            (error) => console.log(error)
+        );
+
+    if(!response.data.ok) console.log(response.data);
+}
