@@ -2,12 +2,15 @@ const selector_modal = require('../../json/selector_modal.json');
 const loaders = require('../loaders');
 
 module.exports.buildSelector = async (parameters) => {
-    let users = await loaders.loadUsers(parameters.team_id)
-                             .catch((error) => console.log(error));
+    let users = await loaders.loadUsers(
+        parameters.team_id, parameters.bot_token
+        ).catch((error) => console.log(error));
+
     users = users.filter((user) => user.id !== parameters.user_id);
     
-    let channels =  await  loaders.loadChannels(parameters.team_id)
-                                    .catch((error) => console.log(error));
+    let channels =  await  loaders.loadChannels(
+        parameters.team_id, parameters.bot_token
+        ).catch((error) => console.log(error));
 
     let modal = {};
     let groups = [];

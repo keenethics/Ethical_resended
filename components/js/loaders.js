@@ -1,18 +1,17 @@
 const axios = require('axios');
 const qs = require('qs');
-const keyset = require('../../constants.json');
 
-module.exports.loadUsers = async (team_id) => {
+module.exports.loadUsers = async (team_id, token) => {
     let users = await axios.post(
         'https://slack.com/api/users.list', 
         qs.stringify({
-            token: keyset.SLACK_BOT_TOKEN,
+            token: token,
             team_id: team_id
         }),
         {
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
-                "Authorization": `Bearer ${keyset.SLACK_BOT_TOKEN}`
+                "Authorization": `Bearer ${token}`
             }
         }
     );
@@ -25,17 +24,17 @@ module.exports.loadUsers = async (team_id) => {
     }
 }
 
-module.exports.loadChannels = async (team_id) => {
+module.exports.loadChannels = async (team_id, token) => {
     let channels = await axios.post(
         'https://slack.com/api/conversations.list', 
         qs.stringify({
-            token: keyset.SLACK_BOT_TOKEN,
+            token: token,
             team_id: team_id
         }),
         {
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
-                "Authorization": `Bearer ${keyset.SLACK_BOT_TOKEN}`
+                "Authorization": `Bearer ${token}`
             }
         }
     );
@@ -55,13 +54,13 @@ module.exports.loadChannelMembers = async (channel_id) => {
         let payload = await axios.post(
             'https://slack.com/api/conversations.members', 
             qs.stringify({
-                token: keyset.SLACK_BOT_TOKEN,
+                token: token,
                 channel: channel_id
             }),
             {
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",
-                    "Authorization": `Bearer ${keyset.SLACK_BOT_TOKEN}`
+                    "Authorization": `Bearer ${token}`
                 }
             }
         );

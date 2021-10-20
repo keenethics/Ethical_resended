@@ -23,11 +23,12 @@ module.exports.handleShortcutSubmit = async (payload) => {
         blocks.selector_block.selection_action.selected_options
     );
     let user_set = await submitHandlers.getUserset(
-        payload.team.id, payload.user.user_id, allow_restricted
+        payload.team.id, payload.user.user_id, 
+        payload.user.bot_access_token, allow_restricted
     );
 
     user_set = team ? user_set : await submitHandlers.intersectSets(
-        channels, users, user_set
+        channels, users, user_set, payload.user.bot_access_token
     );
 
     let token = post_as_bot ? 

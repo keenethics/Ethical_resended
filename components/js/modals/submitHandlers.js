@@ -33,10 +33,10 @@ module.exports.extractIds = (selected_options) => {
     return [users, channels, team];
 }
 
-module.exports.getUserset = async (team_id, user_id, allow_restricted) => {
+module.exports.getUserset = async (team_id, user_id, token, allow_restricted) => {
     let user_ids = new Set();
 
-    await loaders.loadUsers(team_id).then(loaded_users => {
+    await loaders.loadUsers(team_id, token).then(loaded_users => {
         loaded_users.forEach((user) => {
             if(user.id === user_id) {
                 return;
@@ -49,11 +49,11 @@ module.exports.getUserset = async (team_id, user_id, allow_restricted) => {
     return user_ids;
 }
 
-module.exports.intersectSets = async (channels, users, user_set) => {
+module.exports.intersectSets = async (channels, users, user_set, token) => {
     let buffer = [];
 
     channels.forEach(async (channel) => {
-        let channel_members = await loaders.loadChannelMembers(channel);
+        let channel_members = await loaders.loadChannelMembers(channel, token);
         users.push(...channel_members);
     });
     users.forEach((user_id) => {
