@@ -10,7 +10,7 @@ console.log(`DATABASE_URL: ${process.env.DATABASE_URL}`);
 
 const pool = new Pool({
     connectionString:isProduction ? process.env.DATABASE_URL : connectionString,
-    // ssl: { rejectUnauthorized: false }
+    ssl: { rejectUnauthorized: false }
 });
 
 pool.query(`
