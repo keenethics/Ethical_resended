@@ -1,19 +1,14 @@
 const loaders = require('../loaders');
 const requests = require('../requests');
 
-module.exports.extractCheckboxes = (selected_options) => {
-    let post_as_bot = false;
-    let allow_restricted = false;
-
-    selected_options.forEach((checkbox) => {
-        if(checkbox.value === 'send_as_bot') {
-            post_as_bot = true;
-        } else if(checkbox.value === 'send_to_restricted_users') {
-            allow_restricted = true;
-        }
-    });
-
-    return [post_as_bot, allow_restricted];
+module.exports.extractCheckboxes = (sender_selection, target_selection) => {
+    let post_as_bot = sender_selection.value === 'send_as_bot';
+    let allow_restricted = ['send_to_all', 'send_to_restricted'].indexOf(
+        target_selection.value ) > -1;
+        
+    let allow_members = ['send_to_all', 'send_to_members'].indexOf(
+            target_selection.value ) > -1;
+    return [post_as_bot, allow_restricted, allow_members];
 }
 
 module.exports.extractIds = (selected_options) => {
@@ -33,17 +28,22 @@ module.exports.extractIds = (selected_options) => {
     return [users, channels, team];
 }
 
-module.exports.getUserset = async (team_id, user_id, token, allow_restricted) => {
+module.exports.getUserset = async (
+    team_id, user_id, token, allow_restricted, allow_members
+    ) => {
     let user_ids = new Set();
 
     await loaders.loadUsers(team_id, token).then(loaded_users => {
         loaded_users.forEach((user) => {
             if(user.id === user_id) {
                 return;
-            } else if(  allow_restricted || 
-                        (!user.is_restricted && !user.is_ultra_restricted)) {
-                user_ids.add(user.id);
-            }
+            } else {
+                if(user.is_restricted || user.is_ultra_restricted) {
+                    if(allow_restricted) user_ids.add(user.id);
+                } else {
+                    if(allow_members) user_ids.add(user.id);
+                }
+            }   
         });
     });
     return user_ids;
@@ -52,10 +52,12 @@ module.exports.getUserset = async (team_id, user_id, token, allow_restricted) =>
 module.exports.intersectSets = async (channels, users, user_set, token) => {
     let buffer = [];
 
-    channels.forEach(async (channel) => {
-        let channel_members = await loaders.loadChannelMembers(channel, token);
-        users.push(...channel_members);
-    });
+    let channel_members = await Promise.all( channels.map(async (channel) => {
+        return await loaders.loadChannelMembers(channel, token);
+    }))
+
+    channel_members.forEach((usergroup) => users.push(...usergroup));
+    
     users.forEach((user_id) => {
         if(user_set.has(user_id)) buffer.push(user_id);
     });

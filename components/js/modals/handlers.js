@@ -16,15 +16,16 @@ module.exports.handleShortcut = async (parameters) => {
 module.exports.handleShortcutSubmit = async (payload) => {
     let message = payload.view.state.values.message_block.writing_action.value;
     let blocks = payload.view.state.values;
-    let [post_as_bot, allow_restricted] = submitHandlers.extractCheckboxes(
-        blocks.checkboxes_block.checkboxes_action.selected_options
+    let [post_as_bot, allow_restricted, allow_members] = submitHandlers.extractCheckboxes(
+        blocks.sender.select_action.selected_option,
+        blocks.target.select_action.selected_option,
     );
     let [users, channels, team] = submitHandlers.extractIds(
         blocks.selector_block.selection_action.selected_options
     );
     let user_set = await submitHandlers.getUserset(
-        payload.team.id, payload.user.user_id, 
-        payload.user.bot_access_token, allow_restricted
+        payload.team.id, payload.user.user_id, payload.user.bot_access_token, 
+        allow_restricted, allow_members
     );
 
     user_set = team ? user_set : await submitHandlers.intersectSets(

@@ -17,7 +17,7 @@ async function openAppHome(response, user_id, team_id) {
     response.end();
 }
 
-router.post('/', (req, res, next) => {
+router.post('/', async (req, res, next) => {
     try {
         if(req.body.type === 'url_verification') {
             verifyURL(res, req.body.challenge);

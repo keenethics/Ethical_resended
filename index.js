@@ -1,12 +1,13 @@
 const routes = require('./components/js/inits');
-const bodyParser = require('body-parser');
-let app = require('express')();
+const express = require('express');
+const validation = require('./components/js/validation');
+let app = express();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true}));
+app.use(express.json({ verify: validation.slackVerifyingMiddleware}));
+app.use(express.urlencoded({ extended: true}));
 
 routes.initRoutes(app);
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT || 3000, () => {
     console.log('Server started!');
 })
