@@ -9,9 +9,13 @@ function verifyURL(response, challenge) {
     response.end();
 }
 
-async function openAppHome(response, user_id, team_id) {
-    let workspace_token = (await db.get(team_id)).bot_access_token;
-    
+async function openAppHome(response, user_id, team_id, tab) {
+    if(tab !== 'home') return;
+
+    let user = await db.get(team_id, user_id);
+    let workspace_token = user ? user.bot_access_token : 
+                                 (await db.get(team_id)).bot_access_token;
+
     requests.viewPublish(user_id, appHome, workspace_token);
     response.status(200);
     response.end();
@@ -19,10 +23,11 @@ async function openAppHome(response, user_id, team_id) {
 
 router.post('/', async (req, res, next) => {
     try {
-        if(req.body.type === 'url_verification') {
-            verifyURL(res, req.body.challenge);
-        } else if(req.body.event.type === 'app_home_opened'){
-            openAppHome(res, req.body.event.user, req.body.team_id);
+        let body = req.body;
+        if(body.type === 'url_verification') {
+            verifyURL(res, body.challenge);
+        } else if(body.event.type === 'app_home_opened'){
+            openAppHome(res, body.event.user, body.team_id, body.event.tab);
         }
         
     } catch (error) {

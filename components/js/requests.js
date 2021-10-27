@@ -14,7 +14,7 @@ module.exports.postMessage = async (token, channel, message) => {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
         }
-    ).catch((error) => console.log(error));
+    ).catch((error) => console.log(['PostMessage', error]));
 }
 
 module.exports.viewOpen = async (trigger_id, modal, token) => { 
@@ -34,12 +34,13 @@ module.exports.viewOpen = async (trigger_id, modal, token) => {
             (error) => console.log(error)
         );
 
-    if(!response.data.ok) console.log(response.data);
+    if(!response.data.ok) console.log(['View.open', response.data]);
 
     return response;
 }
 
-module.exports.viewPublish = async (user_id, modal, token) => { 
+module.exports.viewPublish = async (user_id, modal, token) => {
+    
     let response = await axios.post(
         'https://slack.com/api/views.publish', 
         JSON.stringify({
@@ -56,7 +57,7 @@ module.exports.viewPublish = async (user_id, modal, token) => {
             (error) => console.log(error)
         );
 
-    if(!response.data.ok) console.log(response.data);
+    if(!response.data.ok) console.log(['View publish', response.data]);
 
     return response;
 }
@@ -72,9 +73,22 @@ module.exports.response_to_hook = async (response_url, text) => {
                 "Content-Type": "application/json; charset=utf-8"
             }
         }
-        ).catch(
-            (error) => console.log(error)
         );
 
-    if(!response.data.ok) console.log(response.data);
+    if(!response.data.ok) console.log(['Response to hook', response.data]);
+}
+
+module.exports.revokeToken = async (token) => {
+    let response = await axios.post(
+        'https://slack.com/api/auth.revoke',
+        qs.stringify({
+            token: token
+        }),
+        {
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
+        });
+
+    if(!response.data.ok) console.log(['Revoke token', response.data]);
 }

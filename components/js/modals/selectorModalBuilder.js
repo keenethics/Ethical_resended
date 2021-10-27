@@ -2,11 +2,10 @@ const selector_modal = require('../../json/selector_modal.json');
 const loaders = require('../loaders');
 
 module.exports.buildSelector = async (parameters) => {
-    let arguments = [parameters.team_id, parameters.bot_token];
-
+    
     let [users, channels] = await Promise.all([
-        loaders.loadUsers(...arguments),
-        loaders.loadChannels(...arguments)
+        loaders.loadUsers(parameters.team_id, parameters.bot_token),
+        loaders.loadChannels(parameters.team_id, parameters.user_token)
     ]).catch((error) => console.log(error));
     
     users = users.filter((user) => user.id !== parameters.user_id);

@@ -18,7 +18,8 @@ module.exports.loadUsers = async (team_id, token) => {
                 }
             }
         );
-        if(!payload.data.ok) throw new Error('Could not load users');
+
+        if(!payload.data.ok) throw new Error('Could not load users'); 
         cursor = payload.data.response_metadata.next_cursor;
         users.push(...payload.data.members);
     } while (cursor);
@@ -31,12 +32,14 @@ module.exports.loadUsers = async (team_id, token) => {
 module.exports.loadChannels = async (team_id, token) => {
     let channels = [];
     let cursor = null;
+    
     do {
         let payload = await axios.post(
             'https://slack.com/api/conversations.list', 
             qs.stringify({
                 token: token,
-                team_id: team_id
+                team_id: team_id,
+                types: 'public_channel,private_channel'
             }),
             {
                 headers: {
@@ -45,7 +48,8 @@ module.exports.loadChannels = async (team_id, token) => {
                 }
             }
         );
-        if(!payload.data.ok) throw new Error('Could not load users');
+
+        if(!payload.data.ok) throw new Error('Could not load channels');
         cursor = payload.data.response_metadata.next_cursor;
         channels.push(...payload.data.channels);
     } while(cursor)
@@ -71,7 +75,7 @@ module.exports.loadChannelMembers = async (channel_id, token) => {
             }
         );
         cursor = payload.data.response_metadata.next_cursor;
-        if(!payload.data.ok) throw new Error('Could not load users');
+        if(!payload.data.ok) throw new Error('Could not load channel members');
         members.push(...payload.data.members);
     } while(cursor);
 

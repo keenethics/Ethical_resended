@@ -25,7 +25,7 @@
 					"emoji": true
 				},
 				"value": "setup_auth",
-				"url": "https://slack.com/oauth/v2/authorize?client_id=2525673614807.2564081677856&scope=channels:read,commands,im:history,im:read,im:write,users:read&user_scope=chat:write",
+				"url": "https://slack.com/oauth/v2/authorize?client_id=2525673614807.2564081677856&scope=channels:read,commands,im:read,im:write,users:read&user_scope=channels:read,chat:write,groups:read",
 				"action_id": "action_setup"
 			}
 		},
@@ -34,6 +34,16 @@
 			"text": {
 				"type": "mrkdwn",
 				"text": "*Використання*\n\n Навести на повідомлення &gt;  інші дії (три крапки справа від смайликів) &gt; *Repeat Message*"
+			},
+			"accessory": {
+				"type": "button",
+				"text": {
+					"type": "plain_text",
+					"text": "Видалити",
+					"emoji": true
+				},
+				"value": "delete_auth",
+				"action_id": "action_delete"
 			}
 		}
 	]

@@ -3,8 +3,11 @@ const express = require('express');
 const validation = require('./components/js/validation');
 let app = express();
 
-app.use(express.json({ verify: validation.slackVerifyingMiddleware}));
-app.use(express.urlencoded({ extended: true}));
+app.use(express.urlencoded({ 
+    extended: true, 
+    verify:validation.slackVerifyingMiddleware 
+}));
+app.use(express.json({verify:validation.slackVerifyingMiddleware}));
 
 routes.initRoutes(app);
 
