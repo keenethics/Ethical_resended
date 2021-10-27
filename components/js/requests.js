@@ -57,7 +57,10 @@ module.exports.viewPublish = async (user_id, modal, token) => {
             (error) => console.log(error)
         );
 
-    if(!response.data.ok) console.log(['View publish', response.data]);
+    if(!response.data.ok) {
+        response.data.request = 'View publish'
+        console.log(response.data);
+    }
 
     return response;
 }
@@ -75,7 +78,10 @@ module.exports.response_to_hook = async (response_url, text) => {
         }
         );
 
-    if(!response.data.ok) console.log(['Response to hook', response.data]);
+    if(!response.data.ok) {
+        response.data.request = 'Response to hook'
+        console.log(response.data);
+    }
 }
 
 module.exports.revokeToken = async (token) => {
@@ -90,5 +96,8 @@ module.exports.revokeToken = async (token) => {
             }
         });
 
-    if(!response.data.ok) console.log(['Revoke token', response.data]);
+    if(!response.data.ok) {
+        response.data.request = 'Revoke token'
+        console.log(response.data);
+    }
 }

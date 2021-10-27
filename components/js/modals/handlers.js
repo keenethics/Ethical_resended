@@ -29,7 +29,7 @@ module.exports.handleShortcutSubmit = async (payload) => {
     );
 
     user_set = team ? user_set : await submitHandlers.intersectSets(
-        channels, users, user_set, payload.user.bot_access_token
+        channels, users, user_set, payload.user.user_access_token
     );
 
     let token = post_as_bot ? 
