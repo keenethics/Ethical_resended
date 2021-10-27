@@ -1,0 +1,189 @@
+{
+	"type": "modal",
+	"callback_id": "selector_modal_submit",
+	"title": {
+		"type": "plain_text",
+		"text": "Меню пересилки"
+	},
+	"blocks": [
+		{
+			"type": "input",
+			"block_id": "message_block",
+			"label": {
+				"type": "plain_text",
+				"text": "Повідомлення для розсилки"
+			},
+			"element": {
+				"type": "plain_text_input",
+				"action_id": "writing_action",
+				"multiline": true,
+				"placeholder": {
+					"type": "plain_text",
+					"text": "Введіть повідомлення тут"
+				}
+			},
+			"hint": {
+				"type": "plain_text",
+				"text": "Вписуйте лише текст, без зображень чи інших інтерактивних елементів."
+			}
+		},
+		{
+			"type": "divider"
+		},
+        {
+			"type": "section",
+			"block_id": "receivers_block",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Оберіть отримувачів"
+			},
+			"accessory": {
+				"type": "multi_conversations_select",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "Оберіть отримувачів"
+				},
+				"action_id": "receivers",
+                "filter": {
+                    "include": [
+                        "public",
+                        "private",
+                        "im"
+                    ],
+                    "exclude_bot_users": true,
+                    "exclude_external_shared_channels": true
+                }
+			}
+		},
+		{
+			"type": "divider"
+		},
+        {
+			"type": "section",
+            "block_id": "workspace",
+			"text": {
+				"type": "mrkdwn",
+				"text": "*Додаткові опції*"
+			},
+			"accessory": {
+				"type": "checkboxes",
+				"options": [
+					{
+						"text": {
+							"type": "mrkdwn",
+							"text": "Надіслати усім у workspace-і"
+						},
+						"description": {
+							"type": "mrkdwn",
+							"text": "Ігнорувати обраних вище отримувачів"
+						},
+						"value": "send_to_team"
+					}
+				],
+				"action_id": "checkbox"
+			}
+		},
+		{
+			"type": "section",
+            "block_id": "sender",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Від кого надсилати повідомлення"
+			},
+			"accessory": {
+				"type": "static_select",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "Обрати адресанта",
+					"emoji": true
+				},
+				"options": [
+					{
+						"text": {
+							"type": "plain_text",
+							"text": "Від свого імені",
+							"emoji": true
+						},
+						"value": "send_as_user"
+					},
+					{
+						"text": {
+							"type": "plain_text",
+							"text": "Від імені бота",
+							"emoji": true
+						},
+						"value": "send_as_bot"
+					}
+				],
+				"initial_option": {
+					"text": {
+						"type": "plain_text",
+						"text": "Від свого імені",
+						"emoji": true
+					},
+					"value": "send_as_user"
+				},
+				"action_id": "select_action"
+			}
+		},
+		{
+			"type": "section",
+            "block_id": "target",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Кому надсилати повідомлення"
+			},
+			"accessory": {
+				"type": "static_select",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "Обрати адресатів",
+					"emoji": true
+				},
+				"options": [
+					{
+						"text": {
+							"type": "plain_text",
+							"text": "Усім",
+							"emoji": true
+						},
+						"value": "send_to_all"
+					},
+					{
+						"text": {
+							"type": "plain_text",
+							"text": "Учасникам команди",
+							"emoji": true
+						},
+						"value": "send_to_members"
+					},
+					{
+						"text": {
+							"type": "plain_text",
+							"text": "Гостям",
+							"emoji": true
+						},
+						"value": "send_to_restricted"
+					}
+				],
+				"initial_option": {
+					"text": {
+						"type": "plain_text",
+						"text": "Усім",
+						"emoji": true
+					},
+					"value": "send_to_all"
+				},
+				"action_id": "select_action"
+			}
+		}
+	],
+	"submit": {
+		"type": "plain_text",
+		"text": "Надіслати"
+	},
+	"close": {
+		"type": "plain_text",
+		"text": "Відмінити"
+	}
+}

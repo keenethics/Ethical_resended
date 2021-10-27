@@ -11,18 +11,16 @@ module.exports.extractCheckboxes = (sender_selection, target_selection) => {
     return [post_as_bot, allow_restricted, allow_members];
 }
 
-module.exports.extractIds = (selected_options) => {
+module.exports.extractIds = (selected_options, workspace) => {
     let users = [];
     let channels = [];
-    let team = false;
+    let team = Boolean(workspace);
 
     selected_options.forEach(element => {
-        if(element.value[0] === 'U') {
-            users.push(element.value);
-        } else if(element.value[0] === 'C') {
-            channels.push(element.value);
-        } else if(element.value[0] === 'T') {
-            team = true;
+        if(element[0] === 'U') {
+            users.push(element);
+        } else if(element[0] === 'C') {
+            channels.push(element);
         }
     });
     return [users, channels, team];
@@ -98,5 +96,10 @@ module.exports.confirmSending = async (bot_token, user_id, results) => {
             bot_token, user_id, 
             `Успішно надіслано ${results[0]} повідомлень`
         );
+    }
+    
+    if(!res.data.ok) {
+        res.data.request = 'Confirm Sending';
+        console.log(res.data);
     }
 }

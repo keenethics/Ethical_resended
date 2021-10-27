@@ -25,7 +25,7 @@ module.exports.buildSelector = async (parameters) => {
         }]
     }];
     
-    if(channels.length) {groups.push({
+    if(channels.length) { groups.push({
         label: {
             type: "plain_text",
             text: "Канали",

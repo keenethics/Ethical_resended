@@ -7,21 +7,13 @@ function handleShortcuts(payload) {
     if(payload.callback_id === 'resend_message') {
         handlers.handleShortcut({
             trigger_id: payload.trigger_id,
-            team_id: payload.user.team_id,
-            user_id: payload.user.user_id,
             bot_token: payload.user.bot_access_token,
-            user_token: payload.user.user_access_token,
-            team_domain: payload.team.domain,
             text: payload.message.text
         });
     } else if (payload.callback_id === 'resend_message_slash') {
         handlers.handleShortcut({
             trigger_id: payload.trigger_id,
-            team_id: payload.team_id,
-            user_id: payload.user_id,
             bot_token: payload.bot_access_token,
-            user_token: payload.user_access_token,
-            team_domain: payload.team_domain,
             text: payload.text
         });
     }
@@ -94,7 +86,6 @@ router.post('/slash', async (req, res, next) => {
         if(body.command === '/resend') {
             body.callback_id = 'resend_message_slash';
             body.bot_access_token = user.bot_access_token;
-            body.user_access_token = user.user_access_token;
             handleShortcuts(body);
         }
     } catch (error) { console.log(error); }
