@@ -34,7 +34,10 @@ module.exports.viewOpen = async (trigger_id, modal, token) => {
             (error) => console.log(error)
         );
 
-    if(!response.data.ok) console.log(['View.open', response.data]);
+    if(!response.data.ok) {
+        response.data.request = 'View open'
+        console.log(response.data);
+    }
 
     return response;
 }
