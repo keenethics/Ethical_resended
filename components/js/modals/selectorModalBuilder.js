@@ -24,6 +24,23 @@ module.exports.buildSelector = async (parameters) => {
             value: parameters.team_id
         }]
     }];
+    
+    if(channels.length) {groups.push({
+        label: {
+            type: "plain_text",
+            text: "Канали",
+        },
+        options: channels.map((channel) => {
+            return {
+                text: {
+                    type: "plain_text",
+                    text: channel.name
+                },
+                value: channel.id
+            }
+        })
+    })}
+
     if(users.length) {groups.push({
         label: {
             type: "plain_text",
@@ -39,22 +56,6 @@ module.exports.buildSelector = async (parameters) => {
             }
         })
     })}
-    if(channels.length) {groups.push({
-        label: {
-            type: "plain_text",
-            text: "Канали",
-        },
-        options: channels.map((channel) => {
-            return {
-                text: {
-                    type: "plain_text",
-                    text: channel.name
-                },
-                value: channel.id
-            }
-        })
-    })};
-
     Object.assign(modal, selector_modal);
     modal.blocks[0].element.initial_value = parameters.text;
     modal.blocks[2].accessory.option_groups = groups;

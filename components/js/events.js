@@ -6,7 +6,6 @@ const db = require('./db');
 function verifyURL(response, challenge) {
     response.type('application/x-www-form-urlencoded');
     response.send(challenge);
-    response.end();
 }
 
 async function openAppHome(response, user_id, team_id, tab) {
@@ -17,8 +16,6 @@ async function openAppHome(response, user_id, team_id, tab) {
                                  (await db.get(team_id)).bot_access_token;
 
     requests.viewPublish(user_id, appHome, workspace_token);
-    response.status(200);
-    response.end();
 }
 
 router.post('/', async (req, res, next) => {
@@ -29,6 +26,8 @@ router.post('/', async (req, res, next) => {
         } else if(body.event.type === 'app_home_opened'){
             openAppHome(res, body.event.user, body.team_id, body.event.tab);
         }
+        response.status(200);
+        response.end();
         
     } catch (error) {
         console.log(error);

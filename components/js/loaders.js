@@ -9,6 +9,7 @@ module.exports.loadUsers = async (team_id, token) => {
             'https://slack.com/api/users.list', 
             qs.stringify({
                 token: token,
+                limit: 1000,
                 team_id: team_id
             }),
             {
@@ -38,6 +39,7 @@ module.exports.loadChannels = async (team_id, token) => {
             'https://slack.com/api/conversations.list', 
             qs.stringify({
                 token: token,
+                limit: 1000,
                 team_id: team_id,
                 types: 'public_channel,private_channel'
             }),
@@ -65,6 +67,7 @@ module.exports.loadChannelMembers = async (channel_id, token) => {
             'https://slack.com/api/conversations.members', 
             qs.stringify({
                 token: token,
+                limit: 1000,
                 channel: channel_id
             }),
             {

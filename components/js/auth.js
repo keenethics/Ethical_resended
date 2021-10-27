@@ -57,9 +57,10 @@ router.get("/oauth_redirect", (req, res, next) => {
                 bot_scopes: result.scope
             });
             res.redirect("./thanks");
+            res.end();
         } else throw new Error('Auth flow was ruined!');
-        res.end();
     }).catch(error => {
+        res.end();
         console.log(error);
     });
 });
