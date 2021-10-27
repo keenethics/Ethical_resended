@@ -8,7 +8,7 @@ function verifyURL(response, challenge) {
     response.send(challenge);
 }
 
-async function openAppHome(response, user_id, team_id, tab) {
+async function openAppHome(user_id, team_id, tab) {
     if(tab !== 'home') return;
 
     let user = await db.get(team_id, user_id);
@@ -24,10 +24,10 @@ router.post('/', async (req, res, next) => {
         if(body.type === 'url_verification') {
             verifyURL(res, body.challenge);
         } else if(body.event.type === 'app_home_opened'){
-            openAppHome(res, body.event.user, body.team_id, body.event.tab);
+            openAppHome(body.event.user, body.team_id, body.event.tab);
         }
-        response.status(200);
-        response.end();
+        res.status(200);
+        res.end();
         
     } catch (error) {
         console.log(error);
