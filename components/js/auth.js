@@ -6,9 +6,11 @@ let router = require('express').Router();
 
 router.get("/add", (req, res, next) => {
     res.write(
-        '<a href="https://slack.com/oauth/v2/authorize?client_id=2525673614807.2564081677856' +
-        '&scope=channels:read,chat:write,commands,im:history,im:read,im:write,' + 
-        'users:read&user_scope=chat:write"><img alt="Add to Slack" height="40" width="139" ' + 
+        '<a href="https://slack.com/oauth/v2/authorize?' + 
+        'client_id=2525673614807.2564081677856' + 
+        '&scope=channels:read,chat:write,commands,im:read,im:write,users:read' +
+        '&user_scope=channels:read,chat:write,groups:read,users:read">' +
+        '<img alt="Add to Slack" height="40" width="139" ' + 
         'src="https://platform.slack-edge.com/img/add_to_slack.png" ' + 
         'srcSet="https://platform.slack-edge.com/img/add_to_slack.png 1x, ' + 
         'https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>'
@@ -18,9 +20,10 @@ router.get("/add", (req, res, next) => {
 
 router.get("/direct", (req, res, next) => {
     res.redirect(
-        'https://slack.com/oauth/v2/authorize?client_id=2525673614807.2564081677856' + 
-        '&scope=channels:read,chat:write,commands,im:history,im:read,' + 
-        'im:write,users:read&user_scope=chat:write'
+        'https://slack.com/oauth/v2/authorize?' +
+        'client_id=2525673614807.2564081677856' +
+        '&scope=channels:read,chat:write,commands,im:read,im:write,users:read'+
+        '&user_scope=channels:read,chat:write,groups:read,users:read'
     );
     res.end();
 });

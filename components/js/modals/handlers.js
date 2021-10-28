@@ -39,7 +39,7 @@ module.exports.handleShortcutSubmit = async (payload) => {
         payload.user.bot_access_token : payload.user.user_access_token;
 
     let result = await submitHandlers.postMessages(user_set, token, message);
-    // submitHandlers.confirmSending(
-    //     payload.user.bot_access_token, payload.user.user_id, result
-    // );
+    submitHandlers.confirmSending(
+        payload.user.bot_access_token, payload.user.user_id, result
+    );
 }

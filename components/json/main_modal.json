@@ -41,7 +41,7 @@
 				"type": "multi_conversations_select",
 				"placeholder": {
 					"type": "plain_text",
-					"text": "Оберіть отримувачів"
+					"text": "Окремі користувачі, канали звідки їх брати"
 				},
 				"action_id": "receivers",
                 "filter": {
@@ -55,6 +55,15 @@
                 }
 			}
 		},
+        {
+            "type": "context",
+            "elements": [
+                {
+                    "type":"mrkdwn",
+                    "text":"*Увага*, при виборі каналу, розсилка йде його учасникам, а не в сам канал!"
+                }
+            ]
+        },
 		{
 			"type": "divider"
 		},
