@@ -17,6 +17,23 @@ module.exports.postMessage = async (token, channel, message) => {
     ).catch((error) => console.log(['PostMessage', error]));
 }
 
+module.exports.scheduleMessage = async (token, channel, message, time) => {
+    return await axios.post(
+        'https://slack.com/api/chat.scheduleMessage',
+        qs.stringify({
+            token: token,
+            channel: channel,
+            text: message,
+            post_at: time.getTime() / 1000 | 0
+        }),
+        {
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
+        }
+    ).catch((error) => console.log(['PostMessage', error]));
+}
+
 module.exports.viewOpen = async (trigger_id, modal, token) => { 
     let response = await axios.post(
         'https://slack.com/api/views.open', 

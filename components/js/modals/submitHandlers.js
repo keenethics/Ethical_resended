@@ -1,7 +1,7 @@
 const loaders = require('../loaders');
 const requests = require('../requests');
 
-module.exports.extractCheckboxes = (sender_selection, target_selection) => {
+module.exports.extractSelectors = (sender_selection, target_selection) => {
     let post_as_bot = sender_selection.value === 'send_as_bot';
     let allow_restricted = ['send_to_all', 'send_to_restricted'].indexOf(
         target_selection.value ) > -1;
@@ -11,10 +11,15 @@ module.exports.extractCheckboxes = (sender_selection, target_selection) => {
     return [post_as_bot, allow_restricted, allow_members];
 }
 
-module.exports.extractIds = (selected_options, workspace) => {
+module.exports.extractIds = (selected_options, checkboxes) => {
     let users = [];
     let channels = [];
-    let team = Boolean(workspace);
+    let [team, schedule] = [false, false];
+
+    checkboxes.forEach((checkbox) => {
+        if(checkbox.value === 'send_to_team') team = true;
+        else if (checkbox.value === 'schedule_message') schedule=true;
+    })
 
     selected_options.forEach(element => {
         if(element[0] === 'U') {
@@ -23,7 +28,18 @@ module.exports.extractIds = (selected_options, workspace) => {
             channels.push(element);
         }
     });
-    return [users, channels, team];
+    return [users, channels, team, schedule];
+}
+
+module.exports.extractDateTime = (datetime) => {
+    let date = datetime.date.selected_date;
+    let time = datetime.time.selected_time;
+
+    if(!(date && time)) throw new Error('Bad Datetime!')
+    let new_datetime = new Date(date + ' ' + time)
+
+    if((new Date()) > new_datetime) throw new Error('Selected datetime is in the past!')
+    return new_datetime
 }
 
 module.exports.getUserset = async (
@@ -83,18 +99,40 @@ module.exports.postMessages = async (user_set, token, message) => {
     return [success_counter, error_users];
 }
 
-module.exports.confirmSending = async (bot_token, user_id, results) => {
+module.exports.scheduleMessages = async (user_set, token, message, time) => {
+    let success_counter = 0;
+    let error_users = [];
+    user_set = Array.from(user_set);
+
+    let responses = await Promise.all(user_set.map((user_id) => {
+        return requests.scheduleMessage(token, user_id, message, time);
+    }));
+
+    responses.forEach( (res, idx) => {
+        if(res.data.ok) {
+            success_counter += 1;
+        } else {
+            error_users.push(user_set[idx]);
+        }
+    });
+
+    return [success_counter, error_users];
+}
+
+module.exports.confirmSending = async (bot_token, user_id, results, schedule) => {
+    let action = schedule ? 'заплановано' : 'надіслано';
+    
     if(results[1].length !== 0) {
         results[1] = results[1].map((user_id) => `<@${user_id}>`)
         var res = await requests.postMessage(
             bot_token, user_id, 
-            (`Успішно надіслано ${results[0]} повідомлень, не вдалося` + 
+            (`Успішно ${action} ${results[0]} повідомлень, не вдалося` + 
              ` надіслати повідомлення цим користувачам: ${results[1].join(', ')}`)
         );
     } else {
         var res = await requests.postMessage(
             bot_token, user_id, 
-            `Успішно надіслано ${results[0]} повідомлень`
+            `Успішно ${action} ${results[0]} повідомлень`
         );
     }
     
