@@ -18,13 +18,14 @@ module.exports.postMessage = async (token, channel, message) => {
 }
 
 module.exports.scheduleMessage = async (token, channel, message, time) => {
+    let time = process.env.isProduction ? time.getTime() - 7200000 : time.getTime();
     return await axios.post(
         'https://slack.com/api/chat.scheduleMessage',
         qs.stringify({
             token: token,
             channel: channel,
             text: message,
-            post_at: time.getTime() / 1000 | 0
+            post_at: time / 1000 | 0
         }),
         {
             headers: {
