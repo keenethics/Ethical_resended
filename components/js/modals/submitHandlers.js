@@ -100,6 +100,7 @@ module.exports.postMessages = async (user_set, token, message) => {
 }
 
 module.exports.scheduleMessages = async (user_set, token, message, time) => {
+    console.log(time);
     let success_counter = 0;
     let error_users = [];
     user_set = Array.from(user_set);
@@ -109,6 +110,7 @@ module.exports.scheduleMessages = async (user_set, token, message, time) => {
     }));
 
     responses.forEach( (res, idx) => {
+        console.log(res.data);
         if(res.data.ok) {
             success_counter += 1;
         } else {
@@ -121,7 +123,7 @@ module.exports.scheduleMessages = async (user_set, token, message, time) => {
 
 module.exports.confirmSending = async (bot_token, user_id, results, schedule) => {
     let action = schedule ? 'заплановано' : 'надіслано';
-    
+
     if(results[1].length !== 0) {
         results[1] = results[1].map((user_id) => `<@${user_id}>`)
         var res = await requests.postMessage(
