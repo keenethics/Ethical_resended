@@ -100,7 +100,6 @@ module.exports.postMessages = async (user_set, token, message) => {
 }
 
 module.exports.scheduleMessages = async (user_set, token, message, time) => {
-    console.log(time);
     let success_counter = 0;
     let error_users = [];
     user_set = Array.from(user_set);
@@ -110,7 +109,6 @@ module.exports.scheduleMessages = async (user_set, token, message, time) => {
     }));
 
     responses.forEach( (res, idx) => {
-        console.log(res.data);
         if(res.data.ok) {
             success_counter += 1;
         } else {
