@@ -87,6 +87,17 @@
 							"text": "Ігнорувати обраних вище отримувачів"
 						},
 						"value": "send_to_team"
+					},
+                    {
+						"text": {
+							"type": "mrkdwn",
+							"text": "Надіслати пізніше"
+						},
+						"description": {
+							"type": "mrkdwn",
+							"text": "Надіслати повідомлення у вказаний нижче час"
+						},
+						"value": "schedule_message"
 					}
 				],
 				"action_id": "checkbox"
@@ -185,7 +196,29 @@
 				},
 				"action_id": "select_action"
 			}
-		}
+		},
+        {
+            "type": "actions",
+            "block_id": "datetime",
+            "elements": [
+                {
+                    "type": "datepicker",
+                    "action_id": "date",
+                    "placeholder": {
+                        "type": "plain_text",
+                        "text": "Оберіть дату відправлення"
+                    }
+                },
+                {
+                    "type": "timepicker",
+                    "action_id": "time",
+                    "placeholder": {
+                        "type": "plain_text",
+                        "text": "Оберіть час відправлення"
+                    }
+                }
+            ]
+        }
 	],
 	"submit": {
 		"type": "plain_text",

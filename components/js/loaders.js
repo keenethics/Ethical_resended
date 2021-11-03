@@ -3,14 +3,15 @@ const qs = require('qs');
 
 module.exports.loadUsers = async (team_id, token) => {
     let users = [];
-    let cursor = null;
+    let cursor = undefined;
     do {
         let payload = await axios.post(
             'https://slack.com/api/users.list', 
             qs.stringify({
                 token: token,
                 limit: 1000,
-                team_id: team_id
+                team_id: team_id,
+                cursor: cursor
             }),
             {
                 headers: {
@@ -36,7 +37,7 @@ module.exports.loadUsers = async (team_id, token) => {
 
 module.exports.loadChannels = async (team_id, token) => {
     let channels = [];
-    let cursor = null;
+    let cursor = undefined;
     
     do {
         let payload = await axios.post(
@@ -45,7 +46,8 @@ module.exports.loadChannels = async (team_id, token) => {
                 token: token,
                 limit: 1000,
                 team_id: team_id,
-                types: 'public_channel,private_channel'
+                types: 'public_channel,private_channel',
+                cursor: cursor
             }),
             {
                 headers: {
@@ -69,14 +71,15 @@ module.exports.loadChannels = async (team_id, token) => {
 
 module.exports.loadChannelMembers = async (channel_id, token) => {
     let members = [];
-    let cursor = null;
+    let cursor = undefined;
     do {
         let payload = await axios.post(
             'https://slack.com/api/conversations.members', 
             qs.stringify({
                 token: token,
                 limit: 1000,
-                channel: channel_id
+                channel: channel_id,
+                cursor: cursor
             }),
             {
                 headers: {
