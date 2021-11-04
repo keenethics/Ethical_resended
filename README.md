@@ -16,6 +16,7 @@ Note, that previously selected addressees will be ignored.
 6. You may send message as bot (anonimously) or as you, according to `Choose sender` setting.
 7. You may limit addressees to team members or guests according to your `Limit sending to` setting
 8. Click `Submit` and you will get confirmation message from the bot if sending were successful or who did not get your message (if there were any troubles).
+
 That`s all)
 
 ### Installation
@@ -34,4 +35,5 @@ To deploy this bot to your heroku you should:
 `https://ethical-resended.herokuapp.com/slack/interactive-endpoint/slash`)
 8. Save changes to manifest and verify URL.
 9. Head to Slack app **Manage Distribution** page, click **Install app** and allow Public distribution if needed.
-That's all.
+
+That's all)

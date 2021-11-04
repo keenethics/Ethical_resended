@@ -5,8 +5,8 @@ module.exports.postMessage = async (token, channel, message) => {
     return await axios.post(
         'https://slack.com/api/chat.postMessage',
         qs.stringify({
-            token: token,
-            channel: channel,
+            token,
+            channel,
             text: message
         }),
         {
@@ -24,8 +24,8 @@ module.exports.scheduleMessage = async (token, channel, message, time) => {
     return await axios.post(
         'https://slack.com/api/chat.scheduleMessage',
         qs.stringify({
-            token: token,
-            channel: channel,
+            token,
+            channel,
             text: message,
             post_at: time / 1000 | 0
         }),
@@ -41,7 +41,7 @@ module.exports.viewOpen = async (trigger_id, modal, token) => {
     let response = await axios.post(
         'https://slack.com/api/views.open', 
         JSON.stringify({
-            trigger_id: trigger_id,
+            trigger_id,
             view: modal
         }),
         {
@@ -67,7 +67,7 @@ module.exports.viewPublish = async (user_id, modal, token) => {
     let response = await axios.post(
         'https://slack.com/api/views.publish', 
         JSON.stringify({
-            user_id: user_id,
+            user_id,
             view: modal
         }),
         {
@@ -92,7 +92,7 @@ module.exports.response_to_hook = async (response_url, text) => {
     let response = await axios.post(
         response_url, 
         JSON.stringify({
-            text: text
+            text
         }),
         {
             headers: {
@@ -111,7 +111,7 @@ module.exports.revokeToken = async (token) => {
     let response = await axios.post(
         'https://slack.com/api/auth.revoke',
         qs.stringify({
-            token: token
+            token
         }),
         {
             headers: {

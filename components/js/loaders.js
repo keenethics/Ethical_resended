@@ -8,10 +8,9 @@ module.exports.loadUsers = async (team_id, token) => {
         let payload = await axios.post(
             'https://slack.com/api/users.list', 
             qs.stringify({
-                token: token,
+                team_id,
+                cursor,
                 limit: 1000,
-                team_id: team_id,
-                cursor: cursor
             }),
             {
                 headers: {
@@ -43,11 +42,10 @@ module.exports.loadChannels = async (team_id, token) => {
         let payload = await axios.post(
             'https://slack.com/api/conversations.list', 
             qs.stringify({
-                token: token,
+                team_id,
+                cursor,
                 limit: 1000,
-                team_id: team_id,
                 types: 'public_channel,private_channel',
-                cursor: cursor
             }),
             {
                 headers: {
@@ -76,10 +74,9 @@ module.exports.loadChannelMembers = async (channel_id, token) => {
         let payload = await axios.post(
             'https://slack.com/api/conversations.members', 
             qs.stringify({
-                token: token,
+                cursor,
                 limit: 1000,
                 channel: channel_id,
-                cursor: cursor
             }),
             {
                 headers: {
