@@ -5,9 +5,10 @@ require('dotenv').config();
 let router = require('express').Router();
 
 router.get("/add", (req, res, next) => {
+    let client_id = process.env.SLACK_CLIENT_ID || '2525673614807.2564081677856';
     res.write(
         '<a href="https://slack.com/oauth/v2/authorize?' + 
-        'client_id=2525673614807.2564081677856' + 
+        `client_id=${client_id}` + 
         '&scope=channels:read,chat:write,commands,im:read,im:write,users:read' +
         '&user_scope=channels:read,chat:write,groups:read,users:read">' +
         '<img alt="Add to Slack" height="40" width="139" ' + 
@@ -19,9 +20,10 @@ router.get("/add", (req, res, next) => {
 });
 
 router.get("/direct", (req, res, next) => {
+    let client_id = process.env.SLACK_CLIENT_ID || '2525673614807.2564081677856';
     res.redirect(
         'https://slack.com/oauth/v2/authorize?' +
-        'client_id=2525673614807.2564081677856' +
+        `client_id=${client_id}` +
         '&scope=channels:read,chat:write,commands,im:read,im:write,users:read'+
         '&user_scope=channels:read,chat:write,groups:read,users:read'
     );

@@ -1,0 +1,74 @@
+{
+    "_metadata": {
+        "major_version": 1,
+        "minor_version": 1
+    },
+    "display_information": {
+        "name": "Ethical resended app",
+        "description": "Adds shortcuts for resending among workspace",
+        "background_color": "#525457"
+    },
+    "features": {
+        "app_home": {
+            "home_tab_enabled": true,
+            "messages_tab_enabled": false,
+            "messages_tab_read_only_enabled": false
+        },
+        "bot_user": {
+            "display_name": "Ethical resended",
+            "always_online": false
+        },
+        "shortcuts": [
+            {
+                "name": "Resend message",
+                "type": "message",
+                "callback_id": "resend_message",
+                "description": "Repeats message from bot`s name."
+            }
+        ],
+        "slash_commands": [
+            {
+                "command": "/resend",
+                "url": "https://your-app.herokuapp.com/slack/interactive-endpoint/slash",
+                "description": "Відкрити меню розсилки",
+                "should_escape": true
+            }
+        ]
+    },
+    "oauth_config": {
+        "redirect_urls": [
+            "https://your-app.herokuapp.com/slack/auth/oauth_redirect"
+        ],
+        "scopes": {
+            "user": [
+                "channels:read",
+                "chat:write",
+                "groups:read",
+                "users:read"
+            ],
+            "bot": [
+                "channels:read",
+                "chat:write",
+                "commands",
+                "im:read",
+                "im:write",
+                "users:read"
+            ]
+        }
+    },
+    "settings": {
+        "event_subscriptions": {
+            "request_url": "https://your-app.herokuapp.com/slack/events",
+            "bot_events": [
+                "app_home_opened"
+            ]
+        },
+        "interactivity": {
+            "is_enabled": true,
+            "request_url": "https://your-app.herokuapp.com/slack/interactive-endpoint"
+        },
+        "org_deploy_enabled": false,
+        "socket_mode_enabled": false,
+        "token_rotation_enabled": false
+    }
+}
