@@ -25,7 +25,7 @@
 					"emoji": true
 				},
 				"value": "setup_auth",
-				"url": "https://slack.com/oauth/v2/authorize?client_id=2525673614807.2564081677856&scope=channels:read,chat:write,commands,im:read,im:write,users:read&user_scope=channels:read,chat:write,groups:read,users:read",
+				"url": "https://slack.com/oauth/v2/authorize?client_id=27071147491.2715879991364&scope=channels:read,chat:write,commands,im:read,im:write,users:read&user_scope=channels:read,chat:write,groups:read,users:read",
 				"action_id": "action_setup"
 			}
 		},
