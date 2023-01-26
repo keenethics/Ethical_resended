@@ -20,7 +20,7 @@ router.get("/add", (req, res, next) => {
 });
 
 router.get("/direct", (req, res, next) => {
-    let client_id = process.env.SLACK_CLIENT_ID || '2525673614807.2564081677856';
+    let client_id = process.env.SLACK_CLIENT_ID || '27071147491.2715879991364';
     res.redirect(
         'https://slack.com/oauth/v2/authorize?' +
         `client_id=${client_id}` +
