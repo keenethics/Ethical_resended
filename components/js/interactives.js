@@ -88,7 +88,7 @@ router.post('/slash', async (req, res, next) => {
             body.bot_access_token = user.bot_access_token;
             handleShortcuts(body);
         }
-    } catch (error) { console.log(error); }
+    } catch (error) { console.log('Slash error: ', error); }
 })
 
 module.exports.interactivityRouter = router;
