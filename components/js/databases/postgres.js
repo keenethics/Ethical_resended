@@ -35,7 +35,7 @@ module.exports.get = async (team_id, user_id=null) => {
         parameters
         )
     if(rows.length) {
-        console.log(`DB requested with teamId=${team_id}, userId=${user_id}: response:${rows[0]}`);
+        console.log(`DB requested with teamId=${team_id}, userId=${user_id}: response:${JSON.stringify(rows[0])}`);
         return rows[0];
     } else {
         return null;
