@@ -56,7 +56,7 @@ module.exports.set = async (newRow) => {
         }
     });
 
-    console.log(`DB requested to set: ${JSON.stringify(newRow, undefined, 2)}`)
+    console.log(`DB requested to set: ${JSON.stringify(values, undefined, 2)}`)
     return pool.query(
         `INSERT INTO credentials(${columns}) VALUES` +
         '($1,$2,$3,$4,$5,$6,$7, $8) RETURNING *', values, 
@@ -64,8 +64,8 @@ module.exports.set = async (newRow) => {
             if(err && err.constraint) {
                 return pool.query(
                     'UPDATE credentials SET team_id=$2, user_access_token=$3' +
-                    ', bot_user_id=$4, team_name=$5, bot_scopes=$6' + 
-                    ', bot_access_token=$7, user_scopes=$8' +
+                    ', bot_user_id=$4, team_name=$6, bot_scopes=$7' + 
+                    ', bot_access_token=$5, user_scopes=$8' +
                     ' WHERE user_id=$1 RETURNING *', 
                     values, (err) => console.log(err)
                     )

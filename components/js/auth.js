@@ -49,7 +49,6 @@ router.get("/oauth_redirect", (req, res, next) => {
         "Content-Type": "application/x-www-form-urlencoded"
     }).then(async result => {
         result = result.data;
-        console.log('Authorized a new user:\n' + JSON.stringify(result, undefined, 2));
 
         if(result.ok) {
             db.set({
