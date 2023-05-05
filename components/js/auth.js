@@ -49,7 +49,8 @@ router.get("/oauth_redirect", (req, res, next) => {
         "Content-Type": "application/x-www-form-urlencoded"
     }).then(async result => {
         result = result.data;
-        
+        console.log('Authorized a new user:\n' + JSON.stringify(result, undefined, 2));
+
         if(result.ok) {
             db.set({
                 user_id: result.authed_user.id,
@@ -63,7 +64,7 @@ router.get("/oauth_redirect", (req, res, next) => {
             });
             res.redirect("./thanks");
             res.end();
-        } else throw new Error('Auth flow was ruined!');
+        } else throw new Error('Auth flow was ruined! \n' + JSON.stringify(result, undefined, 2));
     }).catch(error => {
         res.end();
         console.log(error);

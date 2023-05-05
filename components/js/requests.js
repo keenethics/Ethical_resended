@@ -55,8 +55,8 @@ module.exports.viewOpen = async (trigger_id, modal, token) => {
         );
 
     if(!response.data.ok) {
-        response.data.request = 'View open'
-        console.log(response.data);
+        response.data.request = 'View open';
+        console(JSON.stringify(response.data, undefined, 2));
     }
 
     return response;
@@ -81,8 +81,8 @@ module.exports.viewPublish = async (user_id, modal, token) => {
         );
 
     if(!response.data.ok) {
-        response.data.request = 'View publish'
-        console.log(response.data);
+        response.data.request = 'View publish';
+        console(JSON.stringify(response.data, undefined, 2));
     }
 
     return response;
@@ -102,8 +102,8 @@ module.exports.response_to_hook = async (response_url, text) => {
         );
 
     if(!response.data.ok) {
-        response.data.request = 'Response to hook'
-        console.log(response.data);
+        response.data.request = 'Response to hook';
+        console.log(JSON.stringify(response.data, undefined, 2));
     }
 }
 
@@ -120,7 +120,7 @@ module.exports.revokeToken = async (token) => {
         });
 
     if(!response.data.ok) {
-        response.data.request = 'Revoke token'
-        console.log(response.data);
+        response.data.request = 'Revoke token';
+        console.log(JSON.stringify(response.data, undefined, 2));
     }
 }

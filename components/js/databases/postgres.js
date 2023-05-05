@@ -35,7 +35,7 @@ module.exports.get = async (team_id, user_id=null) => {
         parameters
         )
     if(rows.length) {
-        console.log(`DB requested with teamId=${team_id}, userId=${user_id}: response:${JSON.stringify(rows[0])}`);
+        console.log(`DB requested with teamId=${team_id}, userId=${user_id}: response:${JSON.stringify(rows[0], undefined, 2)}`);
         return rows[0];
     } else {
         return null;
@@ -56,7 +56,7 @@ module.exports.set = async (newRow) => {
         }
     });
 
-    console.log(`DB requested to set: ${JSON.stringify(newRow)}`)
+    console.log(`DB requested to set: ${JSON.stringify(newRow, undefined, 2)}`)
     return pool.query(
         `INSERT INTO credentials(${columns}) VALUES` +
         '($1,$2,$3,$4,$5,$6,$7, $8) RETURNING *', values, 
