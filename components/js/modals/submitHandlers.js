@@ -138,6 +138,6 @@ module.exports.confirmSending = async (bot_token, user_id, results, schedule) =>
     
     if(!res.data.ok) {
         res.data.request = 'Confirm Sending';
-        console.log(res.data);
+        console.log(JSON.stringify(res.data, undefined, 2));
     }
 }
